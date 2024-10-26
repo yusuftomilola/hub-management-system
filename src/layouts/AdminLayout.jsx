@@ -1,8 +1,7 @@
-import { useState } from "react";
-import { useParams } from "react-router-dom";
+import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { Outlet } from "react-router-dom";
-import { Link, NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
 import {
   Dialog,
   DialogBackdrop,
@@ -29,42 +28,12 @@ import {
 } from "../assets";
 import {
   Bars3Icon,
-  BellIcon,
   Cog6ToothIcon,
   XMarkIcon,
 } from "@heroicons/react/24/outline";
-import { ChevronDownIcon } from "@heroicons/react/20/solid";
 import H3 from "../components/H3";
 import P from "../components/P";
 
-const navigation = [
-  { name: "Home", href: "/dashboard", icon: homeIcon, current: true },
-  {
-    name: "Monitoring",
-    href: "/monitoring",
-    icon: monitoringIcon,
-    current: false,
-  },
-  { name: "Users", href: "/users", icon: UsersIcon, current: false },
-  {
-    name: "Subscription",
-    href: "/subscription",
-    icon: subscriptionIcon,
-    current: false,
-  },
-  {
-    name: "Spaces",
-    href: "/spaces",
-    icon: spacesIcon,
-    current: false,
-  },
-  {
-    name: "Complaints",
-    href: "/complaints",
-    icon: complaintsIcon,
-    current: false,
-  },
-];
 const teams = [
   { id: 1, name: "Heroicons", href: "#", initial: "H", current: false },
   { id: 2, name: "Tailwind Labs", href: "#", initial: "T", current: false },
@@ -82,6 +51,38 @@ function classNames(...classes) {
 export default function Example() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const location = useLocation();
+  const [navigation, setNavigation] = useState([
+    { name: "Home", href: "/dashboard", icon: homeIcon, current: true },
+    {
+      name: "Monitoring",
+      href: "/monitoring",
+      icon: monitoringIcon,
+      current: false,
+    },
+    { name: "Users", href: "/users", icon: UsersIcon, current: false },
+    {
+      name: "Subscription",
+      href: "/subscription",
+      icon: subscriptionIcon,
+      current: false,
+    },
+    { name: "Spaces", href: "/spaces", icon: spacesIcon, current: false },
+    {
+      name: "Complaints",
+      href: "/complaints",
+      icon: complaintsIcon,
+      current: false,
+    },
+  ]);
+
+  // Update active navigation item based on current path
+  useEffect(() => {
+    const updatedNavigation = navigation.map((item) => ({
+      ...item,
+      current: item.href === location.pathname,
+    }));
+    setNavigation(updatedNavigation);
+  }, [location.pathname]);
 
   return (
     <>
@@ -209,7 +210,6 @@ export default function Example() {
 
         {/* Static sidebar for desktop */}
         <div className="hidden lg:fixed lg:inset-y-0 lg:z-50 lg:flex lg:w-72 lg:flex-col scroll-m-0">
-          {/* Sidebar component */}
           <div className="flex grow flex-col gap-y-5 overflow-y-auto hide-scrollbar bg-[#f2f2f2] px-6 pb-4">
             {/* logo area */}
             <div className="mt-6">
@@ -221,7 +221,6 @@ export default function Example() {
               <div>
                 <img src={searchIconn} alt="search icon" />
               </div>
-
               <div className="w-[80%]">
                 <input
                   type="search"
@@ -274,7 +273,6 @@ export default function Example() {
                       <H3>Welcome Back</H3>
                       <P>Manage your attendance and Hub Subscription</P>
                     </div>
-
                     <div className="flex gap-3 text-[13px]">
                       <p className="font-semibold text-[#475467]">
                         Fri Oct 4, 2024
@@ -282,8 +280,10 @@ export default function Example() {
                       <p className="font-semibold">02:23 PM</p>
                     </div>
                   </div>
+
                   {/* HORIZONTAL RULE */}
                   <hr />
+
                   {/* SIGNED IN USER NAME */}
                   <li className="-mt-4">
                     <Link
@@ -391,7 +391,7 @@ export default function Example() {
             </div>
           </div>
 
-          <main className="py-10">
+          <main className="pt-1.5 pb-10">
             <div className="px-4 sm:px-6 lg:px-8">
               <Outlet />
             </div>

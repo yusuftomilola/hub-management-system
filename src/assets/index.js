@@ -10,8 +10,16 @@ import userIcon from "./icons/userIcon.svg";
 import UsersIcon from "./icons/UsersIcon.svg";
 import settingsIcon from "./icons/settingsIcon.svg";
 import notificationBellIcon from "./icons/notificationBellIcon.svg";
+import addHubUserIcon from "./icons/addHubUserIcon.svg";
+import addStaffIcon from "./icons/addStaffIcon.svg";
+import plusIcon from "./icons/plusIcon.svg";
+import spaceManagementIcon from "./icons/spaceManagementIcon.svg";
 
 export {
+  addHubUserIcon,
+  addStaffIcon,
+  plusIcon,
+  spaceManagementIcon,
   settingsIcon,
   notificationBellIcon,
   complaintsIcon,
